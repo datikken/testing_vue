@@ -2,7 +2,7 @@
   <div>
     <input type="text" v-model="filter" />
     <ul>
-      <li v-for="user in filteredUsers" :key="user">{{ user }}</li>
+      <li v-for="user in filteredUsers" :key="user.toString()">{{ user }}</li>
     </ul>
   </div>
 </template>
