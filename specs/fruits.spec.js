@@ -18,5 +18,4 @@ test('can add fruits to basket with DOM', () => {
 
     expect(wrapper.vm.fruit).toBe('');
     expect(wrapper.vm.basket).toEqual(expect.arrayContaining(['banana']));
-    expect(wrapper.findAll('li').length).toBe(1)
 })
