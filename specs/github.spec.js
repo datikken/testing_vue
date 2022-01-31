@@ -1,28 +1,24 @@
 import GithubCard from '@/github-card'
-import { mount } from '@vue/test-utils'
+import {mount} from "@vue/test-utils";
+
+const expectedUrl = `https://api.github.com/users/123`;
 
 describe('methods', () => {
     test('composeUrl', () => {
         const { composeUrl } = GithubCard.methods;
-        const expectedUrl = `https://api.github.com/users/123`;
         expect(composeUrl(123)).toBe(expectedUrl)
     });
 
-    test('fetchData', () => {
-        const testData = 'GITHUB DATA';
-        const jsonMock = jest.fn().mockResolvedValue(testData)
+    test('fetchData', async () => {
+        const wrapper = mount(GithubCard)
+        const jsonMock = jest.fn().mockResolvedValue(expectedUrl)
         window.fetch = jest.fn().mockResolvedValue({
             json: jsonMock
-        });
+        })
 
-        const wrapper = mount(GithubCard, {
-            methods: {
-                composeUrl: () => `url`
-            }
-        });
+        await wrapper.vm.fetchData()
 
-        expect(window.fetch).toHaveBeenCalledWith('url')
         expect(jsonMock).toHaveBeenCalled()
-        expect(wrapper.vm.data).toBe(testData)
+        expect(wrapper.vm.data).toBe(expectedUrl)
     })
 });
