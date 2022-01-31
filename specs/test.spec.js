@@ -1,18 +1,10 @@
-import TestComponent from '@/test';
-import { mount, shallowMount } from '@vue/test-utils';
-import List from "../src/list";
+import { mount } from '@vue/test-utils';
+import List from "@/list";
 
-test('mount vue component', () => {
-    const wrap = mount(TestComponent, {
-      propsData: {
-          value: 'vue-yes'
-      }
-    })
+test('List component', () => {
+    const wrap = mount(List);
+    const movies = wrap.vm.marvelMovies;
+    wrap.setData({ marvelMovies: [...movies, 'Endgame']});
 
-    expect(wrap.html()).toMatchSnapshot()
-});
-
-test(`List component shallow`, () => {
-    console.log(mount(List).html())
-    console.log(shallowMount(List).html())
-});
+    expect(wrap).toMatchSnapshot()
+})
